@@ -27,10 +27,14 @@ public class Tape {
     }
     public String toString(){
         String answer="";
-        for(Character ch:tape){
-            answer+=ch;
+        try {
+            for (Character ch : tape) {
+                answer += ch;
+            }
+            return answer;
+        }catch (NullPointerException e){
+            return null;
         }
-        return answer;
     }
 //    public static void main(String[] args) {
 //        Other.Tape tape = new Other.Tape();

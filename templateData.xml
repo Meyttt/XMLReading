@@ -31,6 +31,5 @@
 			<alphabet>
 				<abc name="Letter" short_name="L" description="Содержит буквы латинского алфавита"/>
 			</alphabet>
-			<tape>SomethigInTheTape</tape>
 		</descriptive_part>
 	</r-pro>

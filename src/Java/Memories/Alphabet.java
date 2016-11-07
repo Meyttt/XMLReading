@@ -37,6 +37,7 @@ public class Alphabet {
                 answer += ch;
             }
         }catch (NullPointerException e){
+            answer+=null;
         }
         return answer;
     }
