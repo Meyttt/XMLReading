@@ -66,6 +66,7 @@ public class Condition {
     }
 
 //  4. Предикат образец: по символу '!' происходит поиск элемента не схожего с теми, что описаны в операнде
+    public class Expression()
     boolean compare(char ch, Memory memory, Tape tape) {
         if(ch == '!') {
             String str;
