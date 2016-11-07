@@ -35,7 +35,6 @@ public class Alphabet {
         try{
         answer+= alphabet.toString();}
         catch (NullPointerException e){
-
         }
         return answer;
     }

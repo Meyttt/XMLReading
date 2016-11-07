@@ -22,58 +22,59 @@ import java.util.*;
  * Created by master on 31.10.2016.
  */
 public class AlgorithmReader {
-    public HashMap<String, Memory> readMemories() throws ParserConfigurationException, IOException, SAXException {
+    public static HashMap<String, Memory> readMemories() throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
         f.setValidating(false);
         DocumentBuilder builder = f.newDocumentBuilder();
-        Document document = builder.parse (new File("templateStrorage.xml"));
+        Document document = builder.parse(new File("templateStrorage.xml"));
         HashMap<String, Memory> memoriesMap = new HashMap<>();
         NodeList armsMemory = document.getElementsByTagName("memory");
-        for(int j=0;j<armsMemory.getLength();j++){
-            NamedNodeMap atrs=armsMemory.item(j).getAttributes();
-            switch (atrs.getNamedItem("type").getNodeValue()){
-                case("Register"):{
+        for (int j = 0; j < armsMemory.getLength(); j++) {
+            NamedNodeMap atrs = armsMemory.item(j).getAttributes();
+            switch (atrs.getNamedItem("type").getNodeValue()) {
+                case ("Register"): {
                     String name = atrs.getNamedItem("name").getNodeValue();
-                    memoriesMap.put(name,new Register(name,null));
+                    memoriesMap.put(name, new Register(name, null));
                     break;
                 }
-                case("Counter"):{
+                case ("Counter"): {
                     String name = atrs.getNamedItem("name").getNodeValue();
-                    memoriesMap.put(name,new Counter(name,null));
+                    memoriesMap.put(name, new Counter(name, null));
                     break;
                 }
-                case("Wagon"):{
-                    String name = atrs.getNamedItem("leftName").getNodeValue()+"*"+atrs.getNamedItem("rightName").getNodeValue();
-                    memoriesMap.put(name,new Wagon(atrs.getNamedItem("leftName").getNodeValue(),atrs.getNamedItem("rightName").getNodeValue(),null));
+                case ("Wagon"): {
+                    String name = atrs.getNamedItem("leftName").getNodeValue() + "*" + atrs.getNamedItem("rightName").getNodeValue();
+                    memoriesMap.put(name, new Wagon(atrs.getNamedItem("leftName").getNodeValue(), atrs.getNamedItem("rightName").getNodeValue(), null));
                     break;
                 }
-                case("Table"):{
+                case ("Table"): {
                     String name = atrs.getNamedItem("name").getNodeValue();
                     ArrayList<String> colnames = new ArrayList<>();
                     NodeList tableChildren = armsMemory.item(j).getChildNodes();
-                    for(int k=0;k<tableChildren.getLength();k++){
-                        if(tableChildren.item(k).hasChildNodes()){
+                    for (int k = 0; k < tableChildren.getLength(); k++) {
+                        if (tableChildren.item(k).hasChildNodes()) {
                             NodeList columnNames = tableChildren.item(k).getChildNodes();
-                            for(int m=0;m<columnNames.getLength();m++){
-                                if(columnNames.item(m).hasChildNodes()){
+                            for (int m = 0; m < columnNames.getLength(); m++) {
+                                if (columnNames.item(m).hasChildNodes()) {
                                     colnames.add(columnNames.item(m).getFirstChild().getNodeValue());
                                 }
                             }
                         }
                     }
-                    memoriesMap.put(name,new Table(name,null,colnames));
+                    memoriesMap.put(name, new Table(name, null, colnames));
                     break;
                 }
             }
         }
+
         //ПРОВЕРКА!
-        Set<String> keys = memoriesMap.keySet();
-        for(String key:keys){
-            System.out.println(memoriesMap.get(key));
-        }
+//        Set<String> keys = memoriesMap.keySet();
+//        for(String key:keys){
+//            System.out.println(memoriesMap.get(key));
+//        }
         return memoriesMap;
     }
-    public HashMap<String,Arm> readArms() throws ParserConfigurationException, IOException, SAXException {
+    public static HashMap<String,Arm> readArms() throws ParserConfigurationException, IOException, SAXException {
         HashMap<String,Arm> arms = new HashMap<>();
 
         DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
@@ -133,7 +134,7 @@ public class AlgorithmReader {
         }
         return arms;
     }
-    public Tape readTape() throws ParserConfigurationException, IOException, SAXException {
+    public static Tape readTape() throws ParserConfigurationException, IOException, SAXException {
         HashMap<String,Arm> arms = new HashMap<>();
 
         DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
@@ -168,7 +169,7 @@ public class AlgorithmReader {
         return tape;
 
     }
-    public  HashMap<String,Alphabet> readAlphabets() throws IOException, SAXException, ParserConfigurationException {
+    public static HashMap<String,Alphabet> readAlphabets() throws IOException, SAXException, ParserConfigurationException {
         HashMap<String,Arm> arms = new HashMap<>();
 
         DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
@@ -202,17 +203,19 @@ public class AlgorithmReader {
             }
         return alphabetMap;
     }
-    public Storage readAlgorithm() throws IOException, SAXException, ParserConfigurationException {
+    public static Storage readAlgorithm() throws IOException, SAXException, ParserConfigurationException {
         HashMap<String,Alphabet> alphabetMap=readAlphabets();
         HashMap<String,Arm> arms = readArms();
+        Set<String> armsName =arms.keySet();
+
         Tape tape=readTape();
         HashMap<String,Memory> memoriesMap=readMemories();
         return new Storage(arms,memoriesMap,alphabetMap,tape);
     }
 
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
-        AlgorithmReader algorithmReader= new AlgorithmReader();
-        algorithmReader.readAlgorithm();
+        Storage storage=readAlgorithm();
+        storage.printStorage();
     }
 
 }

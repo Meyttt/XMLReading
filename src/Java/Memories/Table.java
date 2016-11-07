@@ -114,9 +114,9 @@ public class Table implements Memory {
     public String toString(){
         String answer=null;
         try{
-            answer="Table name: "+tname+"; value: "+table.toString();
+            answer="table: "+tname+"; value: "+table.toString();
         }catch (NullPointerException e){
-            answer= "Table name: "+tname+"; value: null";
+            answer= "table: "+tname+"; value: null";
         }
         return answer;
     }
