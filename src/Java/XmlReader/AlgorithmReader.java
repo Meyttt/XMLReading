@@ -22,14 +22,12 @@ import java.util.*;
  * Created by master on 31.10.2016.
  */
 public class AlgorithmReader {
-    public Storage readAlgorithm() throws IOException, SAXException, ParserConfigurationException {
-        HashMap<String,Arm> arms = new HashMap<>();
-        HashMap<String, Memory> memoriesMap = new HashMap<>();
+    public HashMap<String, Memory> readMemories() throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
         f.setValidating(false);
         DocumentBuilder builder = f.newDocumentBuilder();
-        Document document = builder.parse(new File("templateStrorage.xml"));
-
+        Document document = builder.parse (new File("templateStrorage.xml"));
+        HashMap<String, Memory> memoriesMap = new HashMap<>();
         NodeList armsMemory = document.getElementsByTagName("memory");
         for(int j=0;j<armsMemory.getLength();j++){
             NamedNodeMap atrs=armsMemory.item(j).getAttributes();
@@ -71,10 +69,17 @@ public class AlgorithmReader {
         //ПРОВЕРКА!
         Set<String> keys = memoriesMap.keySet();
         for(String key:keys){
-            System.out.println(key+"-"+memoriesMap.get(key));
+            System.out.println(memoriesMap.get(key));
         }
+        return memoriesMap;
+    }
+    public HashMap<String,Arm> readArms() throws ParserConfigurationException, IOException, SAXException {
+        HashMap<String,Arm> arms = new HashMap<>();
 
-
+        DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+        f.setValidating(false);
+        DocumentBuilder builder = f.newDocumentBuilder();
+        Document document = builder.parse(new File("templateStrorage.xml"));
         NodeList nodeList = document.getElementsByTagName("arm");
         for(int i=0;i<nodeList.getLength();i++) {
             ArrayList<ArmLine> armLines = new ArrayList<>();
@@ -126,55 +131,83 @@ public class AlgorithmReader {
             }
             arms.put(nodeNumber, new Arm(nodeNumber, armLines));
         }
-        Tape tape = null;
-    HashMap<String,Alphabet> alphabetMap=new HashMap<>();
-    NodeList description = document.getElementsByTagName("descriptive_part");
-    for(int i=0;i<description.getLength();i++){
-        if(description.item(i).hasChildNodes()){
-            Node descriptive=description.item(i);
-            NodeList descrParts=descriptive.getChildNodes();
-            for(int j=0;j<descrParts.getLength();j++){
-                if(descrParts.item(j).hasChildNodes()){
-                    switch (descrParts.item(j).getNodeName()){
-                        case("alphabet"):{
-                            NodeList alphNodes = descrParts.item(j).getChildNodes();
-                            for(int b=0;b<alphNodes.getLength();b++){
-                                if(alphNodes.item(b).hasChildNodes()){
-                                    NamedNodeMap alphAtr= alphNodes.item(b).getAttributes();
-                                    alphabetMap.put(alphAtr.getNamedItem("name").getNodeValue(),
-                                            new Alphabet(alphAtr.getNamedItem("name").getNodeValue(),alphAtr.getNamedItem("short_name").getNodeValue(),null));
-                                }
-                            }
-                            break;
-                        }
-                        case("tape"):{
-                            String tapeString = descrParts.item(j).getFirstChild().getNodeValue();
-                            char[] tapeChar = tapeString.toCharArray();
-                            Character[] tapeCharacter = new Character[tapeChar.length];
-                            for(int g=0;g<tapeCharacter.length;g++){
-                                tapeCharacter[g]=new Character(tapeChar[g]);
-                            }
+        return arms;
+    }
+    public Tape readTape() throws ParserConfigurationException, IOException, SAXException {
+        HashMap<String,Arm> arms = new HashMap<>();
 
-                            tape=new Tape(new LinkedList<Character>(Arrays.asList(tapeCharacter)));
-                            //LinkedList<Character> tapeList= new LinkedList<Character>(Arrays.asList(tapeString.toCharArray()));
-                            //tape=new Tape(new LinkedList<Character>(Arrays.asList(descrParts.item(j).getNodeValue().toCharArray()));
-                            break;
+        DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+        f.setValidating(false);
+        DocumentBuilder builder = f.newDocumentBuilder();
+        Document document = builder.parse(new File("templateStrorage.xml"));
+        Tape tape = null;
+        NodeList description = document.getElementsByTagName("descriptive_part");
+        for(int i=0;i<description.getLength();i++){
+            if(description.item(i).hasChildNodes()){
+                Node descriptive=description.item(i);
+                NodeList descrParts=descriptive.getChildNodes();
+                for(int j=0;j<descrParts.getLength();j++){
+                    if(descrParts.item(j).hasChildNodes()){
+                        switch (descrParts.item(j).getNodeName()){
+                            case("tape"):{
+                                String tapeString = descrParts.item(j).getFirstChild().getNodeValue();
+                                char[] tapeChar = tapeString.toCharArray();
+                                Character[] tapeCharacter = new Character[tapeChar.length];
+                                for(int g=0;g<tapeCharacter.length;g++){
+                                    tapeCharacter[g]=new Character(tapeChar[g]);
+                                }
+
+                                tape=new Tape(new LinkedList<Character>(Arrays.asList(tapeCharacter)));
+                                break;
+                            }
                         }
                     }
                 }
             }
         }
+        return tape;
+
     }
-        Set<String> alphabetNames=alphabetMap.keySet();
-        for(String key:alphabetNames){
-            System.out.println("alphabet: "+key+"value: "+alphabetMap.get(key));
-        }
-        System.out.println("tape: "+tape);
-        Set<String> armNames = arms.keySet();
-        for(String arm:armNames){
-            arms.get(arm).printArm();
-        }
-    return new Storage(arms,memoriesMap,alphabetMap,tape);
+    public  HashMap<String,Alphabet> readAlphabets() throws IOException, SAXException, ParserConfigurationException {
+        HashMap<String,Arm> arms = new HashMap<>();
+
+        DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+        f.setValidating(false);
+        DocumentBuilder builder = f.newDocumentBuilder();
+        Document document = builder.parse(new File("templateStrorage.xml"));
+        HashMap<String,Alphabet> alphabetMap=new HashMap<>();
+        NodeList description = document.getElementsByTagName("descriptive_part");
+        for(int i=0;i<description.getLength();i++){
+            if(description.item(i).hasChildNodes()){
+                Node descriptive=description.item(i);
+                NodeList descrParts=descriptive.getChildNodes();
+                for(int j=0;j<descrParts.getLength();j++){
+                    if(descrParts.item(j).hasChildNodes()){
+                        switch (descrParts.item(j).getNodeName()){
+                            case("alphabet"):{
+                                NodeList alphNodes = descrParts.item(j).getChildNodes();
+                                for(int b=0;b<alphNodes.getLength();b++){
+                                    if(alphNodes.item(b).hasChildNodes()){
+                                        NamedNodeMap alphAtr= alphNodes.item(b).getAttributes();
+                                        alphabetMap.put(alphAtr.getNamedItem("name").getNodeValue(),
+                                                new Alphabet(alphAtr.getNamedItem("name").getNodeValue(),alphAtr.getNamedItem("short_name").getNodeValue(),null));
+                                    }
+                                }
+                                break;
+                            }
+                            }
+                        }
+                    }
+                }
+            }
+        return alphabetMap;
+    }
+    public Storage readAlgorithm() throws IOException, SAXException, ParserConfigurationException {
+        HashMap<String,Alphabet> alphabetMap=readAlphabets();
+        HashMap<String,Arm> arms = readArms();
+        Tape tape=readTape();
+        HashMap<String,Memory> memoriesMap=readMemories();
+        return new Storage(arms,memoriesMap,alphabetMap,tape);
     }
 
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {

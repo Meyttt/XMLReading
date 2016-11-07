@@ -63,13 +63,6 @@
 					<operation left="left" operator="-}" right="right"/>
 					<operation left="left" operator="/-}/" right="right"/>
 				</edge>
-				<!--<edge end = "4">-->
-					<!--<predicate>-->
-						<!--<const>true</const>-->
-					<!--</predicate>-->
-					<!--<operation left="left" operator="-}" right="right"/>-->
-					<!--<operation left="left" operator="/-}/" right="right"/>-->
-				<!--</edge>-->
 			</arm>
 		</alg>
 	</r-pro>
