@@ -191,7 +191,7 @@ public class AlgorithmReader {
                                     if(alphNodes.item(b).hasChildNodes()){
                                         NamedNodeMap alphAtr= alphNodes.item(b).getAttributes();
                                         alphabetMap.put(alphAtr.getNamedItem("name").getNodeValue(),
-                                                new Alphabet(alphAtr.getNamedItem("name").getNodeValue(),alphAtr.getNamedItem("short_name").getNodeValue(),null));
+                                                new Alphabet(alphAtr.getNamedItem("name").getNodeValue(),alphAtr.getNamedItem("short_name").getNodeValue(),alphNodes.item(b).getFirstChild().getNodeValue().toCharArray()));
                                     }
                                 }
                                 break;

@@ -15,7 +15,7 @@
 				</memory>
 			</memory_block>
 			<alphabet>
-				<abc name="Letter" short_name="L">"Содержит буквы латинского алфавита"></abc>
+				<abc name="Letter" short_name="L">abcdefghijklmnopqrstuvwxyz</abc>
 			</alphabet>
 			<tape>SomethigInTheTape</tape>
 		</descriptive_part>
@@ -25,43 +25,44 @@
                     <predicate>
                         <alphabet>AlphabetName1</alphabet>
                     </predicate>
-                    <operation left="left" operator="/-}" right="right"/>
+                    <operation left="left" operator="/-&gt;" right="right"/>
                 </edge>
                 <edge end = "2">
                     <predicate>
                         <predicateText>PredicateText1</predicateText>
                     </predicate>
-                    <operation left="left" operator="{-" right="right"/>
-                    <operation left="left" operator="-}/" right="right"/>
+                    <operation left="left" operator="&lt;-" right="right"/>
+                    <operation left="left" operator="-&gt;/" right="right"/>
                 </edge>
 				<edge end = "3">
 					<predicate>
 						<predicateText>PredicateText2</predicateText>
 					</predicate>
-					<operation left="left" operator="-}" right="right"/>
-					<operation left="left" operator="/-}/" right="right"/>
+					<operation left="left" operator="-&gt;" right="right"/>
+					<operation left="left" operator="/-&gt;/" right="right"/>
 				</edge>
             </arm>
 			<arm begin = "2">
+				<!--задаем тип (1-4)-->
 				<edge end = "1">
 					<predicate>
 						<alphabet>AlphabetName1</alphabet>
 					</predicate>
-					<operation left="left" operator="/-}" right="right"/>
+					<operation left="left" operator="/-&gt;" right="right"/>
 				</edge>
 				<edge end = "2">
 					<predicate>
 						<predicateText>PredicateText3</predicateText>
 					</predicate>
-					<operation left="left" operator="{-" right="right"/>
-					<operation left="left" operator="-}/" right="right"/>
+					<operation left="left" operator="&lt;-" right="right"/>
+					<operation left="left" operator="-&gt;/" right="right"/>
 				</edge>
 				<edge end = "3">
 					<predicate>
 						<predicateText>PredicateText4</predicateText>
 					</predicate>
-					<operation left="left" operator="-}" right="right"/>
-					<operation left="left" operator="/-}/" right="right"/>
+					<operation left="left" operator="-&gt;" right="right"/>
+					<operation left="left" operator="/-&gt;/" right="right"/>
 				</edge>
 			</arm>
 		</alg>

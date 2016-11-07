@@ -41,7 +41,7 @@ public class Table implements Memory {
     }
 
     public int size() { return this.table.size(); }
-
+    //TODO: для работы с памятью нам необходимо чтение по столбцу. Иначе говоря, обращаться по имени столбца к текущей строке
     public String read(String... args) {
         return this.table.get(strnumber).get(colnumber);
     }

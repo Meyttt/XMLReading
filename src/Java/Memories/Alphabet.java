@@ -31,10 +31,12 @@ public class Alphabet {
         this.name=null;
     }
     public String toString(){
-        String answer=fullname;
-        try{
-        answer+= alphabet.toString();}
-        catch (NullPointerException e){
+        String answer=fullname+": ";
+        try {
+            for (Character ch : alphabet) {
+                answer += ch;
+            }
+        }catch (NullPointerException e){
         }
         return answer;
     }
