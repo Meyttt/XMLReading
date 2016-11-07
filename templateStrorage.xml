@@ -17,7 +17,6 @@
 			<alphabet>
 				<abc name="Letter" short_name="L">abcdefghijklmnopqrstuvwxyz</abc>
 			</alphabet>
-			<tape>SomethigInTheTape</tape>
 		</descriptive_part>
 		<alg>
 			<arm begin = "0">

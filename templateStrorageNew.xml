@@ -1,0 +1,50 @@
+	<!DOCTYPE r-pro>
+	<r-pro version="1.0">
+		<progname><!-- Имя программы --></progname>
+		<comment><!-- Условный комментарий --></comment>
+		<descriptive_part>
+			<memory_block>
+				<memory type="Register" name="left"/>
+				<memory type="Counter" name="counter1"/>
+				<memory type="Wagon" leftName="W1LeftName" rightName="W1RightName"/>
+				<memory type="Table" name = "tname">
+					<columnsName>
+						<column>Name1</column>
+						<column>Name2</column>
+					</columnsName>
+				</memory>
+			</memory_block>
+			<alphabet>
+				<abc name="Letter" short_name="L" description="descr">"Содержит буквы латинского алфавита"></abc>
+			</alphabet>
+			<tape>SomethigInTheTape</tape>
+		</descriptive_part>
+		<alg>
+			<arm begin = "0">
+                <edge end = "1">
+                    <predicate type="alphabet">predAlphabet</predicate>
+                    <operation left_operand="left" operator="/-}" right_operand="right"/>
+                </edge>
+                <edge end = "2">
+                    <predicate type="expression">
+						<left_side>a</left_side>
+						<sign>}</sign>
+						<right_side>b</right_side>
+					</predicate>
+                    <operation left_operand="left" operator="{-" right="right"/>
+                    <operation left_operand="left" operator="-}/" right="right"/>
+                </edge>
+				<edge end = "3">
+					<predicate type="constant">predConst</predicate>
+					<operation left_operand="left" operator="-}" right="right"/>
+					<operation left_operand="left" operator="/-}/" right="right"/>
+				</edge>
+				<edge end = "4">
+					<predicate type="memory">predMem</predicate>
+					<operation left_operand="left" operator="-}" right="right"/>
+					<operation left_operand="left" operator="/-}/" right="right"/>
+				</edge>
+            </arm>
+
+		</alg>
+	</r-pro>
